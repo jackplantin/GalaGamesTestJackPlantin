@@ -1,6 +1,4 @@
-﻿
-
-using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium.Chrome;
 
 namespace GalaGamesTestJackPlantin
 {
