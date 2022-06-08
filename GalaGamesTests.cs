@@ -9,7 +9,8 @@ namespace GalaGamesTestJackPlantin
         [SetUp]
         public void TestInitialize()
         {
-            Initialize("https://app.gala.games/games"); 
+            Initialize("https://app.gala.games/games");
+            GamesPage.AcceptAllCookies();
         }
 
         [TearDown]
@@ -22,23 +23,26 @@ namespace GalaGamesTestJackPlantin
         [Test]
         public void TownStarShouldNotLaunchIfImNotLoggedIn()
         {
-            
-            Thread.Sleep(5000);
-
+            GamesPage.ClickTownStarPlayButton();
+            Assert.IsTrue(GamesPage.IsCreateAccountModalVisible());
         }
 
         //From the Store page Search for an item of your choice
         [Test]
-        public void Test2()
+        public void SearchForItemInStore()
         {
-
+            Driver.Navigate().GoToUrl("https://app.gala.games/store");
+            StorePage.SearchForItem("Gala Film Pass");
+            Assert.IsTrue(StorePage.DoesItemMatchWhatImSearching("Gala Film Pass"));
         }
 
         //From the Store page I should be able to filter Town Star items by Epic Rarity
         [Test]
-        public void Test3()
+        public void FilterTownStarByEpicRarity()
         {
-
+            Driver.Navigate().GoToUrl("https://app.gala.games/store");
+            StorePage.FilterByGame("Town Star");
+            StorePage.FilterByRarity("Rare");
         }
 
         //From the Store page I should be able to filter Spider Tank items by Rare Rarity
