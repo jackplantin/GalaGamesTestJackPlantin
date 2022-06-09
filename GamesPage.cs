@@ -1,18 +1,14 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GalaGamesTestJackPlantin
 {
     public class GamesPage : WebDriverSetup
     {
-        public static By TOWN_STAR_PLAY_BUTTON = By.XPath("");
+
         public static By CREATE_ACCOUNT_MODAL = By.ClassName("v-form");
         public static By LIST_OF_APPS = By.CssSelector("div.secondary.mb-6.v-card.v-sheet.theme--dark");
 
+        //Statically clicks the town star button, can make it dynamic by town star is 1/2 games that has play button
         public static void ClickTownStarPlayButton()
         {
 
@@ -27,11 +23,13 @@ namespace GalaGamesTestJackPlantin
            
         }
 
+        //Check if create account modal opens, which indicates that you aren't logged in
         public static bool? IsCreateAccountModalVisible()
         {
             return wait.Until(d => d.FindElement(CREATE_ACCOUNT_MODAL).Displayed);
         }
 
+        //Method to click the accept all cookies button before each test run. Hidden in shadow root so have to workaround
         public static void AcceptAllCookies()
         {
 
@@ -47,9 +45,6 @@ namespace GalaGamesTestJackPlantin
 
             cookiesButton.Click();
         }
-
-
-
 
     }
 }
