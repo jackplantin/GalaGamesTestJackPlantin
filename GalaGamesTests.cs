@@ -42,14 +42,18 @@ namespace GalaGamesTestJackPlantin
         {
             Driver.Navigate().GoToUrl("https://app.gala.games/store");
             StorePage.FilterByGame("Town Star");
-            StorePage.FilterByRarity("Rare");
+            StorePage.SelectFilterCheckboxOptionByText("Epic");
+            Assert.IsTrue(StorePage.AreFiltersApplied("Town Star"));
         }
 
         //From the Store page I should be able to filter Spider Tank items by Rare Rarity
         [Test]
-        public void Test4()
+        public void FilterSpiderTankByRareRarity()
         {
-
+            Driver.Navigate().GoToUrl("https://app.gala.games/store");
+            StorePage.FilterByGame("Spider Tanks");
+            StorePage.SelectFilterCheckboxOptionByText("Rare");
+            Assert.IsTrue(StorePage.AreFiltersApplied("Spider Tanks"));
         }
 
 

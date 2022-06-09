@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GalaGamesTestJackPlantin
 {
@@ -12,7 +7,8 @@ namespace GalaGamesTestJackPlantin
 
         public static By SEARCH_INPUT_FIELD = By.XPath("//input[@data-testid = 'search-bar-input']");
         public static By ALL_ITEM_RESULTS = By.XPath("//div[@data-testid = 'store-item']");
-        public static By RARITY_CHECKBOXES = By.XPath("//div[@class = 'd-flex align-center option-filter py-2']/p");
+        public static By FILTER_LABELS = By.XPath("//div[@class = 'd-flex align-center option-filter py-2']/p");
+        public static By FILTER_CHECKBOXES = By.XPath("//div[@data-testid = 'item-filter-checkbox']");
         
 
 
@@ -42,17 +38,34 @@ namespace GalaGamesTestJackPlantin
 
         }
 
+        //Clicks on the side menu game options
         public static void FilterByGame(string gameName)
         {
-            var sideMenuAppFilter = wait.Until(d => Driver.FindElement(By.XPath("//img[@alt = '" + gameName + "']")));
+            var sideMenuAppFilter = wait.Until(d => d.FindElement(By.XPath("//img[@alt = '" + gameName + "']")));
             sideMenuAppFilter.Click();
         }
 
-        public static void FilterByRarity(string appName, string rarityType)
+        //Clicks on the side filter menu options that contain a checkbox
+        public static void SelectFilterCheckboxOptionByText(string checkBoxText)
         {
             
+            for (int i = 1; i <= Driver.FindElements(FILTER_LABELS).Count; i++)
+            {
+                var currentFilterLabelText = Driver.FindElement(By.XPath("(//div[@class = 'd-flex align-center option-filter py-2']/p)[" + i + "]")).Text;
 
+                if (currentFilterLabelText.Contains(checkBoxText))
+                {
+                    Driver.FindElement(By.XPath("(//div[@data-testid = 'item-filter-checkbox'])[" + i + "]")).Click();
+                    break;
+                }
 
+            }
+
+        }
+
+        public static bool? AreFiltersApplied(string filterType)
+        {
+           return wait.Until(d => d.FindElement(By.CssSelector("p.mb-0.accent--text.medium-font.font-weight-medium"))).Text.Equals(filterType);
         }
 
 
